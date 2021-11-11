@@ -55,8 +55,8 @@ app.post('/api/shorturl', urlencodedParser, async (req, res) => {
       console.log("55-lookup: " + lookup);
       if (lookup) {
         res.json({
-          origURL: lookup.origURL,
-          shortURL: lookup.shortURL
+          original_url: lookup.origURL,
+          short_url: lookup.shortURL
         })
       } else {
         console.log("62-New:" + url_input + " -- " + short_code );
@@ -67,8 +67,8 @@ app.post('/api/shorturl', urlencodedParser, async (req, res) => {
         console.log("67-lookup: " + lookup);
         await lookup.save()
         res.json({
-          origURL: lookup.origURL,
-          shortURL: lookup.shortURL
+          original_url: lookup.origURL,
+          short_url: lookup.shortURL
         })
       }
   }
@@ -76,8 +76,9 @@ app.post('/api/shorturl', urlencodedParser, async (req, res) => {
 
 app.get("/api/shorturl/:short_url?", async (req, res) => {
       const urlParams = await Url.findOne({
-      short_url: req.params.shortURL
+      shortURL: req.params.short_url
     })
+    console.log(urlParams);
     if (urlParams) {
       return res.redirect(urlParams.origURL)
     } else {
